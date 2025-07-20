@@ -1,61 +1,53 @@
 # E-commerce Backend API
 
-A simplified e-commerce backend service API built with NestJS and TypeScript, following the mobile app design requirements.
+A simplified backend service for e-commerce, built with NestJS and TypeScript, designed for mobile app integration.
 
-## Features
+---
+
+## 🚀 Features
 
 - **Product Management**
-  - Create, read, update, and delete products
-  - Product search and filtering
-  - Category-based product organization
-  - Featured products and sale products
-  - Stock management with inventory tracking
-
+  - CRUD operations, search, filtering, categories, featured/sale products, inventory tracking
 - **Shopping Cart**
-  - Session-based cart management
-  - Add/remove items from cart
-  - Update item quantities
-  - Cart summary with pricing calculations
-  - Size and color selection support
+  - Session-based cart, add/remove/update items, pricing summary, size/color selection
+- **RESTful API**
+  - Consistent HTTP methods/status codes, error handling, validation, Swagger docs
 
-- **RESTful API Design**
-  - Consistent HTTP methods and status codes
-  - Proper error handling and validation
-  - Comprehensive API documentation with Swagger
+---
 
-## Technology Stack
+## 🛠 Technology Stack
 
-- **Framework**: NestJS
-- **Language**: TypeScript
-- **Database**: SQLite (with TypeORM)
-- **Validation**: class-validator
-- **Documentation**: Swagger/OpenAPI
-- **Testing**: Jest
+| Component      | Details                    |
+| -------------- | ------------------------- |
+| Framework      | NestJS                    |
+| Language       | TypeScript                |
+| Database       | SQLite (TypeORM)          |
+| Validation     | class-validator           |
+| Documentation  | Swagger/OpenAPI           |
+| Testing        | Jest                      |
 
-## Prerequisites
+---
 
-- Node.js (v14 or higher)
+## ⚡ Prerequisites
+
+- Node.js (v14+)
 - npm or yarn
 
-## Installation
+---
 
-1. Clone the repository:
+## 📦 Installation
+
 ```bash
 git clone <repository-url>
 cd ecommerce-backend
-```
-
-2. Install dependencies:
-```bash
 npm install
 ```
 
-3. Set up environment variables:
-```bash
-# Copy the example environment file
-cp .env.example .env
+### Environment Setup
 
-# Edit the .env file if needed
+```bash
+cp .env.example .env
+# Edit .env as needed
 NODE_ENV=development
 PORT=3000
 DATABASE_PATH=database.sqlite
@@ -63,239 +55,189 @@ JWT_SECRET=your secret
 JWT_EXPIRES_IN=7d
 ```
 
-4. Start the application:
+### Start Application
+
 ```bash
-# Development mode
 npm run start:dev
+```
 
+API available at: [http://localhost:3000](http://localhost:3000)
 
-The API will be available at `http://localhost:3000`
+---
 
-## API Documentation
+## 📚 API Documentation
 
-Once the application is running, you can access the interactive API documentation at:
-- Swagger UI: `http://localhost:3000/api/docs`
+- Swagger UI: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
 
-## API Endpoints
+---
+
+## 🔗 API Endpoints
 
 ### Health Check
-- `GET /` - API health check
+- `GET /` — API health check
 
 ### Products
-- `POST /api/v1/products` - Create a new product
-- `GET /api/v1/products` - Get all products (with filtering and pagination)
-- `GET /api/v1/products/:id` - Get a specific product
-- `PATCH /api/v1/products/:id` - Update a product
-- `DELETE /api/v1/products/:id` - Delete a product
-- `GET /api/v1/products/featured` - Get featured products
-- `GET /api/v1/products/sale` - Get products on sale
-- `GET /api/v1/products/search?q=:searchTerm` - Search products
-- `GET /api/v1/products/category/:categoryId` - Get products by category
-- `GET /api/v1/products/brand/:brand` - Get products by brand
+- `POST /api/v1/products` — Create product
+- `GET /api/v1/products` — List products (filter/paginate)
+- `GET /api/v1/products/:id` — Get product
+- `PATCH /api/v1/products/:id` — Update product
+- `DELETE /api/v1/products/:id` — Delete product
+- `GET /api/v1/products/featured` — Featured products
+- `GET /api/v1/products/sale` — Sale products
+- `GET /api/v1/products/search?q=:searchTerm` — Search products
+- `GET /api/v1/products/category/:categoryId` — By category
+- `GET /api/v1/products/brand/:brand` — By brand
 
 ### Cart
-- `POST /api/v1/cart/session` - Generate a new session ID
-- `POST /api/v1/cart` - Add item to cart
-- `GET /api/v1/cart` - Get cart contents
-- `PATCH /api/v1/cart/:itemId` - Update cart item
-- `DELETE /api/v1/cart/:itemId` - Remove item from cart
-- `DELETE /api/v1/cart` - Clear cart
-- `GET /api/v1/cart/count` - Get cart item count
-- `GET /api/v1/cart/total` - Get cart total
+- `POST /api/v1/cart/session` — Generate session ID
+- `POST /api/v1/cart` — Add item
+- `GET /api/v1/cart` — Get cart
+- `PATCH /api/v1/cart/:itemId` — Update item
+- `DELETE /api/v1/cart/:itemId` — Remove item
+- `DELETE /api/v1/cart` — Clear cart
+- `GET /api/v1/cart/count` — Item count
+- `GET /api/v1/cart/total` — Cart total
 
 ### Authentication
-The API uses JWT (JSON Web Tokens) for authentication with role-based access control:
 
-- **Public Routes**: Cart operations, product browsing, health check
-- **Protected Routes**: Product management (admin only)
-- **Admin Required**: Creating, updating, and deleting products
+- JWT-based authentication, role-based access
+- **Public:** Cart, product browsing, health check
+- **Protected:** Product management (admin only)
 
 #### User Roles
-- `ADMIN`: Full access to all operations including product management
-- `MANAGER`: Management access (extensible for future features)
-- `USER`: Basic user access
+
+| Role    | Access Level                |
+| ------- | -------------------------- |
+| ADMIN value:admin  | Full (incl. product mgmt)  |
+| MANAGER | Management (future use)    |
+| USER value:user   | Basic user                 |
 
 #### Headers
-- `Authorization: Bearer <JWT_TOKEN>` for authenticated requests
-- `x-session-id: <SESSION_ID>` for cart operations
 
-## Sample API Usage
+- `Authorization: Bearer <JWT_TOKEN>`
+- `x-session-id: <SESSION_ID>`
 
-### 1. Generate Session ID
+---
+
+## 📝 Sample API Usage
+
+**Generate Session ID**
 ```bash
 curl -X POST http://localhost:3000/api/v1/cart/session
 ```
 
-### 2. Create a Product
+**Create Product**
 ```bash
 curl -X POST http://localhost:3000/api/v1/products \
   -H "Content-Type: application/json" \
-  -d '{
-    "name": "Nike Air Max 270",
-    "description": "Comfortable running shoes with air cushioning",
-    "price": 299.43,
-    "originalPrice": 399.99,
-    "brand": "Nike",
-    "model": "Air Max 270",
-    "color": "Red",
-    "sizes": ["6", "6.5", "7", "7.5", "8", "8.5"],
-    "stock": 50,
-    "image": "https://example.com/shoe.jpg"
-  }'
+  -d '{ ... }'
 ```
 
-### 3. Add Item to Cart
+**Add Item to Cart**
 ```bash
 curl -X POST http://localhost:3000/api/v1/cart \
   -H "Content-Type: application/json" \
   -H "x-session-id: YOUR_SESSION_ID" \
-  -d '{
-    "productId": "PRODUCT_UUID",
-    "quantity": 1,
-    "selectedSize": "7",
-    "selectedColor": "Red"
-  }'
+  -d '{ ... }'
 ```
 
-### 4. Get Cart
+**Get Cart**
 ```bash
 curl -X GET http://localhost:3000/api/v1/cart \
   -H "x-session-id: YOUR_SESSION_ID"
 ```
 
-### 5. Search Products
+**Search Products**
 ```bash
 curl -X GET "http://localhost:3000/api/v1/products?search=Nike&page=1&limit=10"
 ```
 
-## Testing
+---
 
-Run the test suite:
+## 🧪 Testing
+
 ```bash
-# Unit tests
-npm run test
-
-# Test coverage
-npm run test:cov
-
-# Watch mode
-npm run test:watch
+npm run test         # Unit tests
+npm run test:watch   # Watch mode
 ```
 
-## Database Schema
+---
 
-### Products Table
-- `id` - UUID (Primary Key)
-- `name` - Product name
-- `description` - Product description
-- `price` - Current price
-- `originalPrice` - Original price (for discounts)
-- `discountPercentage` - Calculated discount percentage
-- `image` - Main product image URL
-- `images` - Array of image URLs
-- `brand` - Product brand
-- `model` - Product model
-- `color` - Product color
-- `sizes` - Available sizes (JSON array)
-- `stock` - Stock quantity
-- `status` - Product status
-- `sku` - Stock Keeping Unit
-- `rating` - Product rating
-- `reviewCount` - Number of reviews
-- `isActive` - Whether product is active
-- `isFeatured` - Whether product is featured
-- `categoryId` - Foreign key to categories
-- `createdAt` - Creation timestamp
-- `updatedAt` - Last update timestamp
+## 🗄 Database Schema
 
-### Categories Table
-- `id` - UUID (Primary Key)
-- `name` - Category name
-- `description` - Category description
-- `icon` - Category icon URL
-- `isActive` - Whether category is active
-- `createdAt` - Creation timestamp
-- `updatedAt` - Last update timestamp
+### Products
 
-### Cart Items Table
-- `id` - UUID (Primary Key)
-- `sessionId` - User session identifier
-- `productId` - Foreign key to products
-- `quantity` - Item quantity
-- `selectedSize` - Selected size
-- `selectedColor` - Selected color
-- `price` - Price at time of adding to cart
-- `createdAt` - Creation timestamp
-- `updatedAt` - Last update timestamp
+| Field              | Type        | Description                  |
+| ------------------ | ---------- | ---------------------------- |
+| id                 | UUID       | Primary Key                  |
+| name               | string     | Product name                 |
+| description        | string     | Product description          |
+| price              | number     | Current price                |
+| originalPrice      | number     | Original price               |
+| discountPercentage | number     | Calculated discount          |
+| image              | string     | Main image URL               |
+| images             | string[]   | Array of image URLs          |
+| brand              | string     | Brand                        |
+| model              | string     | Model                        |
+| color              | string     | Color                        |
+| sizes              | string[]   | Available sizes              |
+| stock              | number     | Stock quantity               |
+| status             | string     | Product status               |
+| sku                | string     | SKU                          |
+| rating             | number     | Rating                       |
+| reviewCount        | number     | Review count                 |
+| isActive           | boolean    | Active status                |
+| isFeatured         | boolean    | Featured status              |
+| categoryId         | UUID       | Category FK                  |
+| createdAt          | timestamp  | Created                      |
+| updatedAt          | timestamp  | Updated                      |
 
-## Design Decisions
+### Categories
 
-### 1. Session-Based Cart Management
-- **Decision**: Use session IDs instead of user authentication for cart management
-- **Rationale**: Simplifies the API and allows guest users to use the cart
-- **Trade-off**: Carts are not persistent across different devices/browsers
+| Field      | Type      | Description           |
+| ---------- | --------- | --------------------- |
+| id         | UUID      | Primary Key           |
+| name       | string    | Category name         |
+| description| string    | Category description  |
+| icon       | string    | Icon URL              |
+| isActive   | boolean   | Active status         |
+| createdAt  | timestamp | Created               |
+| updatedAt  | timestamp | Updated               |
 
-### 2. SQLite Database
-- **Decision**: Use SQLite for data storage
-- **Rationale**: Lightweight, serverless, and easy to set up for development
-- **Trade-off**: Limited concurrent write operations compared to PostgreSQL/MySQL
+### Cart Items
 
-### 3. TypeORM with Active Record Pattern
-- **Decision**: Use TypeORM with Repository pattern
-- **Rationale**: Type-safe database operations and better testability
-- **Trade-off**: Slight learning curve for developers unfamiliar with ORMs
+| Field         | Type      | Description           |
+| ------------- | --------- | --------------------- |
+| id            | UUID      | Primary Key           |
+| sessionId     | string    | Session ID            |
+| productId     | UUID      | Product FK            |
+| quantity      | number    | Quantity              |
+| selectedSize  | string    | Size                  |
+| selectedColor | string    | Color                 |
+| price         | number    | Price at add time     |
+| createdAt     | timestamp | Created               |
+| updatedAt     | timestamp | Updated               |
 
-### 4. Price Calculation at Cart Level
-- **Decision**: Store price in cart items when added
-- **Rationale**: Prevents price changes from affecting existing cart items
-- **Trade-off**: Requires cart cleanup if prices change significantly
+---
 
-### 5. Comprehensive Validation
-- **Decision**: Use class-validator for request validation
-- **Rationale**: Ensures data integrity and provides clear error messages
-- **Trade-off**: Adds slight overhead to request processing
-
-### 6. Repository Pattern
-- **Decision**: Implement repository pattern for database operations
-- **Rationale**: Better separation of concerns and easier testing
-- **Trade-off**: Additional abstraction layer
-
-## Architecture Overview
+## 🏗 Architecture Overview
 
 ```
 src/
-├── common/                 # Shared utilities and base classes
-│   ├── appResponse.parser.ts
-│   └── baseRepository.repository.ts
-├── core/                   # Business logic modules
-│   ├── product/           # Product management
-│   │   ├── dto/           # Data Transfer Objects
-│   │   ├── entities/      # Database entities
-│   │   ├── repository/    # Database operations
-│   │   ├── product.controller.ts
-│   │   ├── product.service.ts
-│   │   └── product.module.ts
-│   └── cart/              # Cart management
-│       ├── dto/
-│       ├── entities/
-│       ├── repository/
-│       ├── cart.controller.ts
-│       ├── cart.service.ts
-│       └── cart.module.ts
-├── app.module.ts          # Main application module
-└── main.ts               # Application entry point
+├── common/         # Shared utilities
+├── core/
+│   ├── product/    # Product management
+│   └── cart/       # Cart management
+├── app.module.ts   # Main module
+└── main.ts         # Entry point
 ```
 
-## Error Handling
+---
 
-The API follows standard HTTP status codes:
-- `200` - Success
-- `201` - Created
-- `400` - Bad Request (validation errors)
-- `404` - Not Found
-- `500` - Internal Server Error
+## ⚠️ Error Handling
 
-Error responses include:
+- Uses standard HTTP status codes (`200`, `201`, `400`, `404`, `500`)
+- Error response format:
 ```json
 {
   "success": false,
@@ -306,41 +248,55 @@ Error responses include:
 }
 ```
 
-## Performance Considerations
+---
 
-1. **Database Indexing**: Key fields are indexed for better query performance
-2. **Pagination**: All list endpoints support pagination to handle large datasets
-3. **Validation**: Input validation prevents invalid data from reaching the database
-4. **Connection Pooling**: TypeORM handles database connection pooling automatically
+## 🏎 Performance
 
-## Security Considerations
+- Indexed key fields
+- Pagination on list endpoints
+- Input validation
+- TypeORM connection pooling
 
-1. **Input Validation**: All inputs are validated using class-validator
-2. **SQL Injection Prevention**: TypeORM provides protection against SQL injection
-3. **CORS**: Configured to allow cross-origin requests for web applications
-4. **Data Sanitization**: User inputs are sanitized before database operations
+---
 
-## Future Enhancements
+## 🔒 Security
 
-1. **Authentication & Authorization**: Add JWT-based authentication
-2. **Order Management**: Implement order creation and management
-3. **Payment Integration**: Add payment gateway integration
-4. **Inventory Management**: Advanced stock tracking and alerts
-5. **Search Optimization**: Implement full-text search with Elasticsearch
-6. **Caching**: Add Redis caching for frequently accessed data
-7. **Image Upload**: Add file upload capabilities for product images
-8. **Admin Panel**: Create admin interface for managing products and orders
+- Input validation (`class-validator`)
+- SQL injection protection (TypeORM)
+- CORS enabled
+- Data sanitization
 
-## Contributing
+---
 
-1. Fork the repository
+## 🌱 Future Enhancements
+
+- JWT authentication & authorization
+- Order management
+- Payment gateway integration
+- Advanced inventory tracking
+- Full-text search (Elasticsearch)
+- Redis caching
+- Image upload
+- Admin panel
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
 2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
+3. Make changes
+4. Add tests
+5. Ensure tests pass
 6. Submit a pull request
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 📄 License
+
+MIT License
+
+---
+
 # ecommerce
+
